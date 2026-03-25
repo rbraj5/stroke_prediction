@@ -2,5 +2,9 @@
 
 This folder hosts the public PDF used for the QR code.
 
-File:
+Files:
 - `Raj_CV_DataScientist.pdf`
+- `Raj_CV_QR.png`
+
+Live CV URL:
+- `https://github.com/rbraj5/stroke_prediction/blob/main/public-cv/Raj_CV_DataScientist.pdf`
