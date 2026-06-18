@@ -58,8 +58,8 @@ class StrokeDataPreprocessor:
             'age_group', 'bmi_category', 'glucose_category',
             'gender_encoded', 'ever_married_encoded', 'urban_residence',
         ]
-        feature_cols.extend([col for col in df.columns if col.startswith('work_')])
-        feature_cols.extend([col for col in df.columns if col.startswith('smoking_')])
+        feature_cols.extend([col for col in df.columns if col.startswith('work_') and col != 'work_type'])
+        feature_cols.extend([col for col in df.columns if col.startswith('smoking_') and col != 'smoking_status'])
 
         return df[feature_cols].copy()
 
@@ -83,6 +83,9 @@ class StrokeDataPreprocessor:
         elif self.feature_names is not None:
             # Ensure exact feature schema used during training
             X = X.reindex(columns=self.feature_names, fill_value=0)
+
+        # Safety: model input must be numeric
+        X = X.apply(pd.to_numeric, errors='coerce').fillna(0)
 
         numerical_cols = [col for col in ['age', 'bmi', 'avg_glucose_level'] if col in X.columns]
         if fit:
